@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'js/javascript.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Produits</h1>
+
+  <p>
+    <button type="button" class="btn btn-primary js-create-product" data-url="{% url 'product_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Nouveau Produit
+    </button>
+  </p>
+
+  <table class="table" id="product-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Origin</th>
+        <th>EAN</th>
+        <th>Package Number</th>
+        <th>Buying Price</th>
+        <th>Wholesale Price</th>
+        <th>Retail Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'products/includes/partial_product_list.html' %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-product">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
