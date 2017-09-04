@@ -11,8 +11,17 @@
     </div>
     <div class="collapse navbar-collapse" id="main-menu">
       <ul class="nav navbar-nav">
-        <li{% if request.path == '/products/' %} class="active"{% endif %}>
-          <a href="{% url 'product_list' %}">Produits</a>
+        <li{% if request.path == '/produits/' %} class="active"{% endif %}>
+          <a href="{% url 'liste_produits' %}">Produits</a>
+        </li>
+        <li{% if request.path == '/stocks/' %} class="active"{% endif %}>
+          <a href="{% url 'liste_stock' %}">Stocks</a>
+        </li>
+        <li{% if request.path == '/contacts/' %} class="active"{% endif %}>
+          <a href="{% url 'liste_contacts' %}">Contacts</a>
+        </li>
+        <li{% if request.path == '/commandes/' %} class="active"{% endif %}>
+          <a href="{% url 'liste_commandes' %}">Commandes</a>
         </li>
       </ul>
     </div>

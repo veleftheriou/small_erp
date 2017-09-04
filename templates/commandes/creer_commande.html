@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Créer une Commande</h1>
+<form action="{% url "creer_commande" %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Créer" class="btn" />
+</form>
+{% endblock %}

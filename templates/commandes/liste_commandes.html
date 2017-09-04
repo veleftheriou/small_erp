@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="page-header">Commandes</h1>
+
+  <!-- BUTTON TO TRIGGER THE ACTION -->
+  <p>
+    <a class="btn btn-primary" href= "{% url "creer_commande" %}">Nouvelle Commande</a>
+  </p>
+  <table class="table" id="tableau_commandes">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Client</th>
+        <th>Dépot ?</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for com in commandes %}
+        <tr>
+          <td>{{ com.id }}</td>
+          <td>{{ com.date }}</td>
+          <td>{{ tab.com }}</td>
+          <td>{% if com.depot == True %} Oui{% else %}Non{% endif %}</td>
+          <td style="width: 150px">
+              <a href="/commandes/editer/{{ com.id }}" class="btn btn-info inline-all">Editer</a><a href="/commandes/supprimer/{{ com.id }}" class="btn btn-danger inline-all">Supprimer</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="12" class="text-center bg-warning">Aucune Commande</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

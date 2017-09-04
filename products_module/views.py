@@ -1,61 +1,42 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.template.loader import render_to_string
-
-from .models import Product
-from .forms import ProductForm
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Produit
+from .forms import FormulaireProduits
+# Create your views here.
 
 
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'products/product_list.html', {'products': products})
+def liste_produits(request):
+    produits = Produit.objects.all()
+    return render(request, 'produits/liste_produits.html', {'produits': produits})
 
 
-def save_product_form(request, form, template_name):
-    data = dict()
-    if request.method == 'POST':
+def creer_produit(request):
+    if request.method != "POST":
+        form = FormulaireProduits()
+        return render(request, 'produits/creer_produit.html', {"form" : form})
+    else:
+        form = FormulaireProduits(request.POST)
         if form.is_valid():
             form.save()
-            data['form_is_valid'] = True
-            products = Product.objects.all()
-            data['html_product_list'] = render_to_string('products/includes/partial_product_list.html', {
-                'products': products
-            })
-        else:
-            data['form_is_valid'] = False
-    context = {'form': form}
-    data['html_form'] = render_to_string(template_name, context, request=request)
-    return JsonResponse(data)
+            return redirect(liste_produits)
 
 
-def product_create(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
+def editer_produit(request, id):
+    produit = get_object_or_404(Produit, pk=id)
+    if request.method != "POST":
+        form = FormulaireProduits(instance=produit)
+        return render(request, 'produits/editer_produit.html', {'form' : form})
     else:
-        form = ProductForm()
-    return save_product_form(request, form, 'products/includes/partial_product_create.html')
+        form = FormulaireProduits(data=request.POST, instance=produit)
+        if form.is_valid():
+            form.save()
+            return redirect(liste_produits)
 
 
-def product_update(request, pk):
-    product= get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
-    else:
-        form = ProductForm(instance=product)
-    return save_product_form(request, form, 'products/includes/partial_product_update.html')
+def supprimer_produit(request, id):
+        Produit.objects.filter(id=id).delete()
+        return redirect(liste_produits)
 
 
-def product_delete(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    data = dict()
-    if request.method == 'POST':
-        product.delete()
-        data['form_is_valid'] = True
-        products = Product.objects.all()
-        data['html_product_list'] = render_to_string('products/includes/partial_product_list.html', {
-            'products': products
-        })
-    else:
-        context = {'product': product}
-        data['html_form'] = render_to_string('products/includes/partial_product_delete.html', context, request=request)
-    return JsonResponse(data)
+def liste_stock(request):
+    produits = Produit.objects.all()
+    return render(request, 'produits/liste_stock.html', {'produits': produits})

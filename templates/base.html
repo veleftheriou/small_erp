@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chance Small ERP System</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery-3.2.1.js' %}"></script>  <!-- JQUERY HERE -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/javascript.js' %}"></script>
   </head>
   <body>
     {% include 'includes/header.html' %}
@@ -13,10 +17,5 @@
       {% block content %}
       {% endblock %}
     </div>
-    <script src="{% static 'js/jquery-3.2.1.js' %}"></script>  <!-- JQUERY HERE -->
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/javascript.js' %}"></script>
-    {% block javascript %}
-    {% endblock %}
   </body>
 </html>

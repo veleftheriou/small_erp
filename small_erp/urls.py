@@ -1,14 +1,26 @@
-from django.conf.urls import url, include
-from django.views.generic import TemplateView
-from django.contrib import admin
+"""small_erp URL Configuration
 
-from products_module import views
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.11/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.views.generic import TemplateView
 
 urlpatterns = [
-	url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
-    url(r'^products/$', views.product_list, name='product_list'),
-    url(r'^products/create/$', views.product_create, name='product_create'),
-    url(r'^products/(?P<pk>\d+)/update/$', views.product_update, name='product_update'),
-    url(r'^products/(?P<pk>\d+)/delete/$', views.product_delete, name='product_delete'),
+    url(r'', include('products_module.urls')),
+    url(r'', include('crm_module.urls')),
+    url(r'', include('order_module.urls'))
 ]

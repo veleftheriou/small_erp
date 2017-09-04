@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="page-header">Contacts</h1>
+
+  <!-- BUTTON TO TRIGGER THE ACTION -->
+  <p>
+    <a class="btn btn-primary" href= "{% url "creer_contact" %}">Nouveau Contact</a>
+  </p>
+  <table class="table" id="tableau_contacts">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Adresse</th>
+        <th>Code Postal</th>
+        <th>Localité</th>
+        <th>Pays</th>
+        <th>Téléphone</th>
+        <th>Email</th>
+        <th>Numéro de TVA</th>
+        <th>Type Contact</th>
+        <th>Statut</th>
+        <th>Dernière Interraction</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for pro in contacts %}
+        <tr>
+          <td>{{ pro.id }}</td>
+          <td>{{ pro.nom }}</td>
+          <td>{{ pro.adresse }}</td>
+          <td>{{ pro.code_postal }}</td>
+          <td>{{ pro.localite }}</td>
+          <td>{{ pro.pays }}</td>
+          <td>{{ pro.telephone }}</td>
+          <td>{{ pro.email }}</td>
+          <td>{{ pro.num_tva }}</td>
+          <td>{{ pro.type_client }}</td>
+          <td>{{ pro.statut_client }}</td>
+          <td>{{ pro.interraction }}</td>
+          <td style="width: 150px">
+              <a href="/contacts/editer/{{ pro.id }}" class="btn btn-info inline-all">Editer</a><a href="/contacts/supprimer/{{ pro.id }}" class="btn btn-danger inline-all">Supprimer</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="12" class="text-center bg-warning">Aucun Contact</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

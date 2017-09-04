@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="page-header">Produits</h1>
+
+  <!-- BUTTON TO TRIGGER THE ACTION -->
+  <p>
+    <a class="btn btn-primary" href= "{% url "creer_produit" %}">Nouveau Produit</a>
+  </p>
+  <table class="table" id="tableau_produits">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Origine</th>
+        <th>EAN</th>
+        <th>Numéro de Lot</th>
+        <th>Prix d'achat (htva)</th>
+        <th>Prix de revente professionnel</th>
+        <th>Prix de revente particulier</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for prod in produits %}
+        <tr>
+          <td>{{ prod.id }}</td>
+          <td>{{ prod.nom }}</td>
+          <td>{{ prod.description }}</td>
+          <td>{{ prod.origine }}</td>
+          <td>{{ prod.ean }}</td>
+          <td>{{ prod.numero_lot }}</td>
+          <td>{{ prod.prix_achat }}</td>
+          <td>{{ prod.prix_revente_gros }}</td>
+          <td>{{ prod.prix_revente_particuliers }}</td>
+          <td style="width: 150px">
+              <a href="/produits/editer/{{ prod.id }}" class="btn btn-info inline-all">Editer</a><a href="/produits/supprimer/{{ prod.id }}" class="btn btn-danger inline-all">Supprimer</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="12" class="text-center bg-warning">Aucun Produit</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

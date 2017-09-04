@@ -1,14 +1,26 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 # Create your models here.
 
-
-class Product(models.Model):
-    name = models.CharField(max_length=80)
+class Produit(models.Model):
+    nom = models.CharField(max_length=80)
     description = models.CharField(max_length=160, blank=True)
-    origin = models.CharField(max_length=50)
+    origine = models.CharField(max_length=50)
     ean = models.CharField(max_length=13, blank=True)
-    package_number = models.CharField(max_length=10, blank=True)
-    buy_price = models.DecimalField(max_digits=6, decimal_places=2)
-    wholesale_price = models.DecimalField(max_digits=6, decimal_places=2)
-    retail_price = models.DecimalField(max_digits=6, decimal_places=2)
+    numero_lot = models.CharField(max_length=10, blank=True)
+    prix_achat = models.DecimalField(max_digits=6, decimal_places=2)
+    prix_revente_gros = models.DecimalField(max_digits=6, decimal_places=2)
+    prix_revente_particuliers = models.DecimalField(max_digits=6, decimal_places=2)
+    stock = models.IntegerField(max_length=3)
+
+
+'''
+class Stock(models.Model):
+    produit = models.OneToOneField(
+        Produit,
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    stock = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+'''
